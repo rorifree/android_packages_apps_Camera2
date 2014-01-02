@@ -692,4 +692,15 @@
         <item>@string/pref_camera_countdown_label_fifteen</item>
     </string-array>
 
+    <!--  Storage photovideo -->
+    <string-array name="pref_photovideo_storage_entries">
+        <item>@string/pref_storage_internal</item>
+        <item>@string/pref_storage_sdcard</item>
+    </string-array>
+
+    <string-array name="pref_photovideo_storage_entryvalues" translatable="false">
+        <item>internal</item>
+        <item>sdcard</item>
+    </string-array>
+
 </resources>

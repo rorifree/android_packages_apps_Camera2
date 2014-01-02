@@ -39,8 +39,8 @@ import com.android.camera.util.ApiHelper;
 public class Storage {
     private static final String TAG = "CameraStorage";
 
-    public static final String DCIM =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
+    // here is our one-line change :-)
+    public static final String DCIM = StorageEnvironment.getStorage();
 
     public static final String DIRECTORY = DCIM + "/Camera";
     public static final String RAW_DIRECTORY = DCIM + "/Camera/raw";

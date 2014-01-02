@@ -239,6 +239,7 @@ public class PhotoMenu extends PieController
         }
         // extra settings popup
         mOtherKeys = new String[] {
+                CameraSettings.KEY_PHOTOVIDEO_STORAGE,
                 CameraSettings.KEY_FOCUS_MODE,
                 CameraSettings.KEY_FOCUS_TIME,
                 CameraSettings.KEY_ISO,
@@ -324,7 +325,8 @@ public class PhotoMenu extends PieController
             setPreference(CameraSettings.KEY_SCENE_MODE, Parameters.SCENE_MODE_AUTO);
             setPreference(CameraSettings.KEY_ASD, mSettingOff);
             setPreference(CameraSettings.KEY_BEAUTY_MODE, mSettingOff);
-        }
+           } else if(pref.getKey().equals(CameraSettings.KEY_PHOTOVIDEO_STORAGE)){
+            com.android.camera.app.CameraApp.reload();
         super.onSettingChanged(pref);
     }
 

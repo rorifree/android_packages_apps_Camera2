@@ -680,4 +680,10 @@ CHAR LIMIT = NONE] -->
 
     <!--  String shown when setting the homepage wallpaper in the background [CHAR LIMIT=NONE] -->
     <string name="setting_wallpaper">Setting wallpaper</string>
+
+   <!--  String shown when storage set [CHAR LIMIT=NONE] -->
+    <string name="pref_storage">Storage</string>
+    <string name="pref_storage_internal">Internal Memory</string>
+    <string name="pref_storage_sdcard">Sd Card</string>
+
  </resources>

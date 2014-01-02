@@ -48,6 +48,7 @@ import java.util.StringTokenizer;
 public class CameraSettings {
     private static final int NOT_FOUND = -1;
 
+    public static final String KEY_PHOTOVIDEO_STORAGE = "pref_photovideo_storage_key";
     public static final String KEY_VERSION = "pref_version_key";
     public static final String KEY_LOCAL_VERSION = "pref_local_version_key";
     public static final String KEY_RECORD_LOCATION = "pref_camera_recordlocation_key";

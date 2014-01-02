@@ -16,18 +16,39 @@
 
 package com.android.camera.app;
 
-import android.app.Application;
+import android.app.AlarmManager;
+import android.content.Intent;
+import android.app.PendingIntent;
+import android.content.Context;
 
+import android.app.Application;
 import com.android.camera.util.CameraUtil;
 import com.android.camera.util.UsageStatistics;
 
 public class CameraApp extends Application {
 
+private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        CameraApp.context = getApplicationContext();
         UsageStatistics.initialize(this);
         CameraUtil.initialize(this);
     }
+
+     public static Context getAppContext() {
+        return CameraApp.context;
+    }
+
+     public static void reload(){
+       // we do a simple restart here!
+       // storage location is saved when app starts and would need more code implementation to reset and change it on the fly, so easy here :-)
+       AlarmManager alm = (AlarmManager) getAppContext().getSystemService(Context.ALARM_SERVICE);
+       alm.set(AlarmManager.RTC, System.currentTimeMillis() + 500, PendingIntent.getActivity(getAppContext(), 0, new Intent(getAppContext().getPackageManager().getLaunchIntentForPackage(getAppContext().getPackageName()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)), 0));
+
+android.os.Process.killProcess(android.os.Process.myPid());
+
+     }
 }
 

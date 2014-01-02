@@ -191,6 +191,7 @@ public class VideoMenu extends PieController
         }
         // extra settings popup
         mOtherKeys = new String[] {
+                CameraSettings.KEY_PHOTOVIDEO_STORAGE,
                 CameraSettings.KEY_VIDEO_ENCODER,
                 CameraSettings.KEY_AUDIO_ENCODER,
                 CameraSettings.KEY_FOCUS_TIME,
@@ -225,6 +226,9 @@ public class VideoMenu extends PieController
             }
         }
         onSettingChanged(pref);
+        if(pref.getKey().equals(CameraSettings.KEY_PHOTOVIDEO_STORAGE)){
+         com.android.camera.app.CameraApp.reload();
+        }
     }
 
     public void popupDismissed() {
