@@ -12,6 +12,9 @@ public class StorageEnvironment {
 		String path = "";
 		SharedPreferences shared = CameraApp.getAppContext().getSharedPreferences(CameraApp.getAppContext().getPackageName() +"_preferences_0",0);
 
+// set our new pref default value !
+shared.edit().putString(CameraSettings.KEY_PHOTOVIDEO_STORAGE, shared.getString(CameraSettings.KEY_PHOTOVIDEO_STORAGE,"internal")).apply();
+
 		if  (shared.getString(CameraSettings.KEY_PHOTOVIDEO_STORAGE, "").equals("internal")) {
 			path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
                         
