@@ -185,7 +185,6 @@ public class PhotoModule
     private ContentProviderClient mMediaProviderClient;
     private boolean mFaceDetectionStarted = false;
 
-    private static final String PERSIST_LONG_ENABLE = "persist.camera.longshot.enable";
     private static final String PERSIST_LONG_SAVE = "persist.camera.longshot.save";
 
     // Constant from android.hardware.Camera.Parameters
@@ -722,6 +721,9 @@ public class PhotoModule
             s.setListener(this);
         }
         mNamedImages = new NamedImages();
+        if (!mIsImageCaptureIntent) {
+            mUI.showSwitcher();
+        }
         mUI.initializeSecondTime(mParameters);
         keepMediaProviderInstance();
     }
@@ -1495,6 +1497,9 @@ public class PhotoModule
 
     @Override
     public void onShutterButtonFocus(boolean pressed) {
+         // disabled, till fixed
+        if (pressed)
+           return;
         if (mPaused || mUI.collapseCameraControls()
                 || (mCameraState == SNAPSHOT_IN_PROGRESS)
                 || (mCameraState == PREVIEW_STOPPED)) return;
@@ -1591,15 +1596,10 @@ public class PhotoModule
     @Override
     public void onShutterButtonLongClick() {
         if ((null != mCameraDevice) && ((mCameraState == IDLE) || (mCameraState == FOCUSING))) {
-            boolean enable = false;
-            enable = SystemProperties.getBoolean(PERSIST_LONG_ENABLE, false);
-            if ( enable ) {
-                enable = SystemProperties.getBoolean(PERSIST_LONG_SAVE, false);
-                mLongshotSave = enable;
-                mCameraDevice.setLongshot(true);
-                setCameraState(PhotoController.LONGSHOT);
-                mFocusManager.doSnap();
-            }
+            mLongshotSave = SystemProperties.getBoolean(PERSIST_LONG_SAVE, false);
+            mCameraDevice.setLongshot(true);
+            setCameraState(PhotoController.LONGSHOT);
+            mFocusManager.doSnap();
         }
     }
 
@@ -1852,7 +1852,8 @@ public class PhotoModule
         }
         // Check if metering area or focus area is supported.
         if (!mFocusAreaSupported && !mMeteringAreaSupported) return;
-        mFocusManager.onSingleTapUp(x, y);
+        // disabled, till fixed
+        // mFocusManager.onSingleTapUp(x, y);
     }
 
     @Override
@@ -1870,7 +1871,8 @@ public class PhotoModule
                     if (event.getRepeatCount() == 0) {
                         onShutterButtonFocus(true);
                     }
-                    return true;
+                    // disabled, till fixed!
+                    return false;
                 }
                 return false;
             case KeyEvent.KEYCODE_CAMERA:
@@ -1889,7 +1891,8 @@ public class PhotoModule
                     onShutterButtonFocus(true);
                     mUI.pressShutterButton();
                 }
-                return true;
+                // disabled, till fixed!
+                return false;
         }
         return false;
     }
@@ -1898,6 +1901,10 @@ public class PhotoModule
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
+               if (/*mActivity.isInCameraApp() && */ mFirstTimeInitialized) {
+                    onShutterButtonClick();
+                    return true;
+                }
             case KeyEvent.KEYCODE_VOLUME_DOWN:
                 if (/*mActivity.isInCameraApp() && */ mFirstTimeInitialized) {
                     onShutterButtonClick();
@@ -1906,7 +1913,7 @@ public class PhotoModule
                 return false;
             case KeyEvent.KEYCODE_FOCUS:
                 if (mFirstTimeInitialized) {
-                    onShutterButtonFocus(false);
+                    // onShutterButtonFocus(false);
                 }
                 return true;
         }
